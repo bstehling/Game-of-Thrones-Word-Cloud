@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="d3.layout.cloud.js"></script>
+<head>
+    <title>Word Cloud Example</title>
+</head>
+<style>
+    body {
+        font-family:"Lucida Grande","Droid Sans",Arial,Helvetica,sans-serif;
+    }
+    .legend {
+        border: 1px solid #555555;
+        border-radius: 5px 5px 5px 5px;
+        font-size: 0.8em;
+        margin: 10px;
+        padding: 8px;
+    }
+    .bld {
+        font-weight: bold;
+    }
+</style>
+<body>
+
+</body>
+<script>
+    
+    var width = 1000, height = 1000;
+    
+   var frequency_list = [
+{"text": "Tyrion Lannister", "size":757},
+{"text": "Eddard Stark", "size":144},
+{"text": "Robert Baratheon", "size":190},
+{"text": "Jaime Lannister", "size":146},
+{"text": "Catelyn Stark", "size":331},
+{"text": "Cersei Lannister", "size":229},
+{"text": "Daenerys Targaryen", "size":229},
+{"text": "Jorah Mormont", "size":67},
+{"text": "Viserys Targaryen", "size":23},
+{"text": "Jon Snow", "size":487},
+{"text": "Sansa Stark", "size":312},
+{"text": "Arya Stark", "size":457},
+{"text": "Robb Stark", "size":239},
+{"text": "Theon Greyjoy", "size":457},
+{"text": "Brandon Stark", "size":466},
+{"text": "Joffrey Baratheon", "size":285},
+{"text": "Sandor Clegane", "size":92},
+{"text": "Khal Drogo", "size":32},
+{"text": "Petyr Baelish", "size":124},
+{"text": "Davos Seaworth", "size":222},
+{"text": "Samwell Tarly", "size":92},
+{"text": "Stannis Baratheon", "size":388},
+{"text": "Melisandre", "size":47},
+{"text": "Jeor Mormont", "size":3},
+{"text": "Bronn", "size":88},
+{"text": "Varys", "size":224},
+{"text": "Shae", "size":76},
+{"text": "Margaery Tyrell", "size":20},
+{"text": "Tywin Lannister", "size":119},
+{"text": "Ygritte", "size":25},
+{"text": "Gendry", "size":128},
+{"text": "Tormund Giantsbane", "size":0},
+{"text": "Brienne of Tarth", "size":107},
+{"text": "Ramsay Bolton", "size":3},
+{"text": "Gilly", "size":5},
+{"text": "Daario Naharis", "size":0},
+{"text": "Missandei", "size":0},
+{"text": "Ellaria Sand", "size":0},
+{"text": "Tommen Baratheon", "size":57},
+{"text": "Jaqen H'ghar", "size":61},
+{"text": "Roose Bolton", "size":28},
+{"text": "The High Sparrow", "size":2},
+{"text": "Hodor", "size":141},
+{"text": "Gregor Clegane", "size":69},
+{"text": "Lancel Lannister", "size":57},
+{"text": "Myrcella Baratheon", "size":41},
+{"text": "Maester Aemon", "size":41},
+{"text": "Loras Tyrell", "size":35},
+{"text": "Podrick Payne", "size":14},
+{"text": "Grey Worm", "size":7},
+{"text": "Olenna Tyrell", "size":36},
+{"text": "Olly", "size":0},
+{"text": "Mace Tyrell", "size":34},
+{"text": "The Waif", "size":0}
+];
+
+    /*var frequency_list = [{"text":"Jon Snow", "size":150},{"text":"study","size":40},{"text":"motion","size":15},{"text":"forces","size":10},{"text":"electricity","size":15},{"text":"movement","size":10},{"text":"relation","size":5},{"text":"things","size":10},{"text":"force","size":5},{"text":"ad","size":5},{"text":"energy","size":85},{"text":"living","size":5},{"text":"nonliving","size":5},{"text":"laws","size":15},{"text":"speed","size":45},{"text":"velocity","size":30},{"text":"define","size":5},{"text":"constraints","size":5},{"text":"universe","size":10},{"text":"physics","size":120},{"text":"describing","size":5},{"text":"matter","size":90},{"text":"physics-the","size":5},{"text":"world","size":10},{"text":"works","size":10},{"text":"science","size":70},{"text":"interactions","size":30},{"text":"studies","size":5},{"text":"properties","size":45},{"text":"nature","size":40},{"text":"branch","size":30},{"text":"concerned","size":25},{"text":"source","size":40},{"text":"google","size":10},{"text":"defintions","size":5},{"text":"two","size":15},{"text":"grouped","size":15},{"text":"traditional","size":15},{"text":"fields","size":15},{"text":"acoustics","size":15},{"text":"optics","size":15},{"text":"mechanics","size":20},{"text":"thermodynamics","size":15},{"text":"electromagnetism","size":15},{"text":"modern","size":15},{"text":"extensions","size":15},{"text":"thefreedictionary","size":15},{"text":"interaction","size":15},{"text":"org","size":25},{"text":"answers","size":5},{"text":"natural","size":15},{"text":"objects","size":5},{"text":"treats","size":10},{"text":"acting","size":5},{"text":"department","size":5},{"text":"gravitation","size":5},{"text":"heat","size":10},{"text":"light","size":10},{"text":"magnetism","size":10},{"text":"modify","size":5},{"text":"general","size":10},{"text":"bodies","size":5},{"text":"philosophy","size":5},{"text":"brainyquote","size":5},{"text":"words","size":5},{"text":"ph","size":5},{"text":"html","size":5},{"text":"lrl","size":5},{"text":"zgzmeylfwuy","size":5},{"text":"subject","size":5},{"text":"distinguished","size":5},{"text":"chemistry","size":5},{"text":"biology","size":5},{"text":"includes","size":5},{"text":"radiation","size":5},{"text":"sound","size":5},{"text":"structure","size":5},{"text":"atoms","size":5},{"text":"including","size":10},{"text":"atomic","size":10},{"text":"nuclear","size":10},{"text":"cryogenics","size":10},{"text":"solid-state","size":10},{"text":"particle","size":10},{"text":"plasma","size":10},{"text":"deals","size":5},{"text":"merriam-webster","size":5},{"text":"dictionary","size":10},{"text":"analysis","size":5},{"text":"conducted","size":5},{"text":"order","size":5},{"text":"understand","size":5},{"text":"behaves","size":5},{"text":"en","size":5},{"text":"wikipedia","size":5},{"text":"wiki","size":5},{"text":"physics-","size":5},{"text":"physical","size":5},{"text":"behaviour","size":5},{"text":"collinsdictionary","size":5},{"text":"english","size":5},{"text":"time","size":35},{"text":"distance","size":35},{"text":"wheels","size":5},{"text":"revelations","size":5},{"text":"minute","size":5},{"text":"acceleration","size":20},{"text":"torque","size":5},{"text":"wheel","size":5},{"text":"rotations","size":5},{"text":"resistance","size":5},{"text":"momentum","size":5},{"text":"measure","size":10},{"text":"direction","size":10},{"text":"car","size":5},{"text":"add","size":5},{"text":"traveled","size":5},{"text":"weight","size":5},{"text":"electrical","size":5},{"text":"power","size":5}];
+*/
+    
+    var fill = d3.scale.category20();
+
+    d3.layout.cloud().size([width, height])
+            .words(frequency_list)
+            .padding(5)
+            .rotate(0)
+            .fontSize(function(d) { return d.size/10; })
+            .on("end", draw)
+            .start();
+
+    function draw(words) {
+        d3.select("body").append("svg")
+                .attr("width", width)
+                .attr("height", height)
+                .attr("class", "wordcloud")
+                .append("g")
+                // without the transform, words words would get cutoff to the left and top, they would
+                // appear outside of the SVG area
+                .attr("transform", "translate(320,300)")
+                .selectAll("text")
+                .data(words)
+                .enter().append("text")
+                .style("font-size", function(d) { return d.size + "px"; })
+                .style("fill", function(d, i) { return fill(i); })
+                .attr("transform", function(d) {
+                    return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+                })
+                .text(function(d) { return d.text; });
+    }
+</script>
+
+
+
+</html>
