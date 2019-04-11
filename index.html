@@ -125,7 +125,8 @@
     }
 
     body > p {
-        width: 720px;
+        width: 800px
+        align: center;
     }
 
     body > blockquote {
@@ -237,22 +238,18 @@
 <h1 style="margin-bottom: 50px;">Game of Thrones Character Visualization</h1>
 
 <body>
-    <p>Select a book from the list.</p>
-
+    <p align="center">Select a book from the list.</p>
+            
     <select id="mySelect" onchange="adjOnChange(); myFunction();">
-        <option value="book1">Book 1</option>
-        <option value="book2">Book 2</option>
-        <option value="book3">Book 3</option>
-        <option value="book4">Book 4</option>
-        <option value="book5">Book 5</option>
-
+        <option value="book1" selected>A Game of Thrones</option>
+        <option value="book2">A Clash of Kings</option>
+        <option value="book3">A Storm of Swords</option>
+        <option value="book4">A Feast for Crows</option>
+        <option value="book5">A Dance with Dragons</option>
     </select>
 
     <p id="demo"></p>
-
-    <div id="myDiv">
-    </div>
-
+    
 </body>
 
 <!--------- ADJACENCY MATRIX ----------------->
@@ -735,6 +732,8 @@
 
 <script>
 
+    
+    
     var width = 1000,
         height = 1000;
     var book1 = [
@@ -852,7 +851,11 @@
         {"text": "Tywin Lannister", "size":77},
     ];
 
-    $(function() {
+    
+    window.onload = function () {
+         
+        document.getElementById("demo").innerHTML = "Book number: 1";
+        
         for (var x = 0; x < book1.length; x = x + 1) {
             //console.log(book1[x].size);
             book1[x].size = book1[x].size / 15;
@@ -878,8 +881,49 @@
             book5[x].size = book5[x].size / 15;
             //console.log(book2[x].size);
         }
-    });
+         
+         var fill = d3.scale.category20();
 
+            d3.layout.cloud()
+                .size([width, height])
+                .words(book1)
+                .padding(1)
+                .rotate(0)
+                /*
+                            .text(function(d){return d.word;})
+                */
+                .fontSize(function(d) {
+                    return d.size;
+                })
+                .on("end", draw)
+                .start();
+
+            function draw(words) {
+                d3.select("body").append("svg").attr("id","svgC")
+                    .attr("width", width)
+                    .attr("height", height)
+                    .attr("class", "wordcloud")
+                    .append("g")
+                    // without the transform, words words would get cutoff to the left and top, they would
+                    // appear outside of the SVG area
+                    .attr("transform", "translate(320,300)")
+                    .selectAll("text")
+                    .data(words)
+                    .enter().append("text")
+                    .style("font-size", function(d) {
+                        return d.size + "px";
+                    })
+                    .style("fill", function(d, i) {
+                        return fill(i);
+                    })
+                    .attr("transform", function(d) {
+                        return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+                    })
+                    .text(function(d) {
+                        return d.text;
+                    });
+            }
+    };
 
 
     function myFunction() {
@@ -888,8 +932,7 @@
 
         //-- WORD CLOUD CHANGE
         var x = document.getElementById("mySelect").value;
-        var name = document.getElementById("mySelect").name;
-        //document.getElementById("demo").innerHTML = "Book selected: " + x.slice(0, 4) + " " + x[4];
+        document.getElementById("demo").innerHTML = "Book number: " + x[4];
 
         d3.select("#svgC").remove();
 
