@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
-
+  
+    
 <style>
 
     body {
@@ -25,7 +26,6 @@
 <!------------ STYLES FROM https://bost.ocks.org/mike/style.css?aea6f0a -------->
 
 <style>
-    /* Copyright 2013 Michael Bostock. All rights reserved. Do not copy. */
 
     @import url(//fonts.googleapis.com/css?family=PT+Serif|PT+Serif:b|PT+Serif:i|PT+Sans|PT+Sans:b);
 
@@ -237,7 +237,7 @@
 
 <h1 style="margin-bottom: 50px;">Game of Thrones Character Visualization</h1>
 
-<body>
+<body style = "background: url(https://ak6.picdn.net/shutterstock/videos/17757796/thumb/1.jpg); background-size: 100% 100%;">
     <p align="center">Select a book from the list.</p>
             
     <select id="mySelect" onchange="adjOnChange(); myFunction();">
@@ -882,13 +882,13 @@
             //console.log(book2[x].size);
         }
          
-         var fill = d3.scale.category20();
+         var fill = d3.scale.category10();
 
             d3.layout.cloud()
                 .size([width, height])
                 .words(book1)
                 .padding(1)
-                .rotate(0)
+                .rotate(function() { return 0; })
                 /*
                             .text(function(d){return d.word;})
                 */
@@ -942,7 +942,7 @@
 
 
 
-            var fill = d3.scale.category20();
+            var fill = d3.scale.category10();
 
             d3.layout.cloud()
                 .size([width, height])
@@ -988,7 +988,7 @@
             x = book2;
 
 
-            var fill = d3.scale.category20();
+            var fill = d3.scale.category10();
 
             d3.layout.cloud()
                 .size([width, height])
@@ -1034,7 +1034,7 @@
             x = book3;
 
 
-            var fill = d3.scale.category20();
+            var fill = d3.scale.category10();
 
             d3.layout.cloud()
                 .size([width, height])
@@ -1080,7 +1080,7 @@
             x = book4;
 
 
-            var fill = d3.scale.category20();
+            var fill = d3.scale.category10();
 
             d3.layout.cloud()
                 .size([width, height])
@@ -1126,7 +1126,7 @@
             x = book5;
 
 
-            var fill = d3.scale.category20();
+            var fill = d3.scale.category10();
 
             d3.layout.cloud()
                 .size([width, height])
