@@ -1,7 +1,7 @@
 # Game-of-Thrones-Word-Cloud
 
 Please watch the following video for an overview of the web application: 
-
+https://youtu.be/aLZEWoGJAWg
 
 Web Application Link:
 https://bstehling.github.io/
